@@ -1,6 +1,7 @@
 import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { JsonReaderService } from './json-reader.service';
 import { TransactionModel } from './transaction';
 
@@ -19,19 +20,23 @@ export class AppComponent implements OnInit {
   recipientAccount;
   userForm;
   transactionData: any;
-  // transactionModel: TransactionModel;
+  unfilteredData;
   constructor(private jsonReader: JsonReaderService,
     private decimalPipe: DecimalPipe,
     private datePipe: DatePipe) { }
   ngOnInit() {
     this.jsonReader.getJSON().subscribe(data =>
-      this.transactionData = data.data,
-      this.transactionData?.forEach(item => {
-        this.datePipe.transform(item.data.dates.valueDate);
-      })
+      this.formatDate(data.data)
     );
-    this.sortTransactions('date');
     this.setFormGroup();
+  }
+  formatDate(transactionData: any) {
+    this.transactionData = transactionData;
+    this.transactionData?.forEach(item => {
+      this.datePipe.transform(item.dates.valueDate);
+    })
+    this.sortTransactions('date');
+    this.unfilteredData = this.transactionData;
   }
   setFormGroup() {
     this.userForm = new FormGroup({
@@ -68,7 +73,7 @@ export class AppComponent implements OnInit {
   }
   onTransfer() {
     this.checkingBalance -= this.dollarAmount;
-    Number(this.decimalPipe.transform(this.checkingBalance, '1.2-2'));
+    this.checkingBalance = Number(this.decimalPipe.transform(this.checkingBalance, '1.2-2'));
     this.transactionData.unshift({
       dates: {
         valueDate: new Date().toString()
@@ -85,7 +90,16 @@ export class AppComponent implements OnInit {
     this.setFormGroup();
     this.previewPage = false;
   }
+  onSearch(event) {
+    let value = event.target.value;
+    if (!value) {
+      this.transactionData = this.unfilteredData;
+    } else {
+      this.transactionData = Object.assign([], this.unfilteredData).filter(
+        item => item.merchant.name.toLowerCase().indexOf(value.toLowerCase()) > -1
+      )
+    }
+  }
   findImage() {
-    
   }
 }

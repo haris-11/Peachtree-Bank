@@ -30,11 +30,11 @@
     <div class="container-header">
       Recent Transactions
     </div>
-    <input class="search-input" placeholder="Search by typing">
-    <span>Sort by
-      <button (click)="sortTransactions('date')">Date </button>
-      <button (click)="sortTransactions('beneficiary')">Beneficiary </button>
-      <button (click)="sortTransactions('amount')">Amount </button>
+    <input class="search-input" (keyup)="onSearch($event)" placeholder="Search by typing...">
+    <span class="sort-buttons">Sort by
+      <button (click)="sortTransactions('date')">DATE <span style="color: lightgray;">&#9660;</span></button>
+      <button (click)="sortTransactions('beneficiary')">BENEFICIARY </button>
+      <button (click)="sortTransactions('amount')">AMOUNT </button>
     </span>
 
     <table>
