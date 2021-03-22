@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { JsonReaderService } from './json-reader.service';
@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   userForm;
   transactionData: any;
   unfilteredData;
+  @ViewChild('searchField') searchField: ElementRef;
   constructor(private jsonReader: JsonReaderService,
     private decimalPipe: DecimalPipe,
     private datePipe: DatePipe) { }
@@ -86,13 +87,15 @@ export class AppComponent implements OnInit {
       merchant: {
         name: this.recipientAccount
       }
-    })
+    });
+    this.unfilteredData = this.transactionData;
     this.setFormGroup();
     this.previewPage = false;
   }
   onSearch(event) {
-    let value = event.target.value;
+    let value = event?.target?.value;
     if (!value) {
+      this.searchField.nativeElement.value = '';
       this.transactionData = this.unfilteredData;
     } else {
       this.transactionData = Object.assign([], this.unfilteredData).filter(

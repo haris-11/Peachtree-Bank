@@ -30,13 +30,19 @@
     <div class="container-header">
       Recent Transactions
     </div>
-    <input class="search-input" (keyup)="onSearch($event)" placeholder="Search by typing...">
-    <span class="sort-buttons">Sort by
-      <button (click)="sortTransactions('date')">DATE <span style="color: lightgray;">&#9660;</span></button>
-      <button (click)="sortTransactions('beneficiary')">BENEFICIARY </button>
-      <button (click)="sortTransactions('amount')">AMOUNT </button>
-    </span>
-
+    <div class="top-row">
+      <div class="input-field">
+        <input class="search-input" #searchField type="text" (keyup)="onSearch($event)"
+          placeholder="Search by typing...">
+        <span><button class="clear-button" (click)="onSearch('')">&times;</button></span>
+      </div>
+      <div class="sort-buttons">
+        Sort by
+        <button (click)="sortTransactions('date')">DATE <span style="color: lightgray;">&#9660;</span></button>
+        <button (click)="sortTransactions('beneficiary')">BENEFICIARY </button>
+        <button (click)="sortTransactions('amount')">AMOUNT </button>
+      </div>
+    </div>
     <table>
       <tr *ngFor="let item of transactionData">
         <td>
