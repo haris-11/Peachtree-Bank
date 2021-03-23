@@ -11,19 +11,36 @@
       FROM ACCOUNT <input formControlName="fromAccount" placeholder="">
       TO ACCOUNT <input formControlName="toAccount" placeholder="Please enter an account">
       AMOUNT <input formControlName="dollarAmount" placeholder="$ 0.00">
-      <span *ngIf="userForm.controls.dollarAmount?.errors?.invalidAmount" style="color: red;">
-        Amount exceeds $500 overdraft limit.
+      <span *ngIf="userForm.controls.dollarAmount?.errors" style="color: red;">
+        {{errorMessage}}
       </span>
-      <button class="submit-button" type="submit" (click)="onSubmitForm()">Submit</button>
+      <button class="submit-button"
+        [ngStyle]="{'margin-top': userForm.controls.dollarAmount?.errors ? '10px' : '20px'}"
+        type="submit" (click)="onSubmitForm()">Submit</button>
     </form>
     <div *ngIf="previewPage" class="preview-page">
-      <h3>
-        You are transferring ${{dollarAmount}} from {{checkingAccountName}} to {{recipientAccount}}.
-
+      <table>
+        <tr>From:
+          <td>{{checkingAccountName}}</td>
+        </tr>
+        <tr>Amount:
+          <td>{{dollarAmount | currency:'USD'}}</td>
+        </tr>
+        <tr>To:
+          <td>{{recipientAccount}}</td>
+        </tr>
+      </table>
+      <!-- <h5>
+        You are transferring ${{dollarAmount}} from <br>{{checkingAccountName}} to <br>{{recipientAccount}}.
+        <br>
+        <br>
         Please click Transfer to proceed or Cancel to return.
-      </h3>
-      <button type="submit" (click)="onCancel()" style="background-color: white; color: black;">Cancel</button>
-      <button type="submit" (click)="onTransfer()">Transfer</button>
+      </h5> -->
+      <h4>
+        Please click Transfer to proceed or Cancel to return.
+      </h4>
+      <button class="cancel-button" type="reset" (click)="onCancel()">Cancel</button>
+      <button class="transfer-button" type="submit" (click)="onTransfer()">Transfer</button>
     </div>
   </div>
   <div *ngIf="transactionData" class="recent-transactions md-col-6">

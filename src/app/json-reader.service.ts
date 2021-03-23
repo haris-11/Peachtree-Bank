@@ -13,4 +13,8 @@ export class JsonReaderService {
   public getJSON(): Observable<any> {
     return this.http.get('./assets/mock/transactions.json');
   }
+
+  public getImages(): Observable<any> {
+    return this.http.get('./assets/icons');
+  }
 }

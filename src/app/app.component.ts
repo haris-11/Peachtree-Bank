@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   userForm;
   transactionData: any;
   unfilteredData;
+  errorMessage;
   @ViewChild('searchField') searchField: ElementRef;
   constructor(private jsonReader: JsonReaderService,
     private decimalPipe: DecimalPipe,
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit {
       this.formatDate(data.data)
     );
     this.setFormGroup();
+    this.findImage();
   }
   formatDate(transactionData: any) {
     this.transactionData = transactionData;
@@ -61,8 +63,20 @@ export class AppComponent implements OnInit {
   }
   onSubmitForm() {
     this.dollarAmount = Number(this.userForm.value.dollarAmount);
-    if ((this.checkingBalance - this.dollarAmount) < -500) {
-      this.userForm.controls.dollarAmount.setErrors({ invalidAmount: true })
+    if (!this.dollarAmount) {
+      // this.errorMessage = 'Please enter a value.';
+      this.userForm.controls.dollarAmount.setErrors({ required: true });
+      this.userForm.controls.dollarAmount.markAsTouched();
+      //       this.userForm.controls.toAccount.setErrors({ required: true });
+      // this.userForm.controls.toAccount.markAsTouched();
+    }
+    if (!this.userForm.value.toAccount) {
+      this.userForm.controls.toAccount.setErrors({ required: true });
+      this.userForm.controls.toAccount.markAsTouched();
+    }
+    else if ((this.checkingBalance - this.dollarAmount) < -500) {
+      this.errorMessage = 'Amount exceeds $500 overdraft limit.';
+      this.userForm.controls.dollarAmount.setErrors({ invalidAmount: true });
     } else {
       this.recipientAccount = this.userForm.value.toAccount;
       this.previewPage = true;
@@ -90,6 +104,7 @@ export class AppComponent implements OnInit {
     });
     this.unfilteredData = this.transactionData;
     this.setFormGroup();
+    this.dollarAmount = 0;
     this.previewPage = false;
   }
   onSearch(event) {
@@ -104,5 +119,7 @@ export class AppComponent implements OnInit {
     }
   }
   findImage() {
+    let a = this.jsonReader.getImages();
+    let b = a;
   }
 }

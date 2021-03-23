@@ -33,7 +33,7 @@
 
 .page-container {
   width: 100%;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 76.5px);
   background: url("../assets/background.jpg") no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -110,40 +110,6 @@ app-header {
   padding-top: 10px;
 }
 
-table {
-  padding-bottom: 15px;
-  width: 100%;
-  padding: 10px 20px 10px 10px;
-}
-
-tr {
-  display: table;
-  margin-bottom: 10px;
-  border: 2px solid gray;
-  border-left: 5px solid #0c8397;
-  width: 100%;
-  height: 50px;
-
-  td:first-child {
-    text-align: left;
-    width: 15%;
-  }
-
-  td:nth-child(2) {
-    width: 30%;
-    text-align: left;
-
-    p {
-      margin: 0;
-      font-size: 12px;
-    }
-  }
-
-  td:last-child {
-    text-align: right;
-  }
-}
-
 input {
   border-color: transparent;
   color: black;
@@ -160,16 +126,32 @@ input:focus {
   outline: 0 !important;
 }
 
+.transfer-button,
 .submit-button {
   background-color: #ea6119;
   border-radius: 2px;
   border: none;
   color: white;
-  width: 60%;
+  width: 50%;
   height: 25px;
   float: right;
+}
+
+.transfer-button {
+  margin-top: 10px;
   margin-right: 10px;
-  vertical-align: bottom;
+}
+
+.cancel-button {
+  background-color: white;
+  border-radius: 2px;
+  border: none;
+  color: black;
+  width: 40%;
+  height: 25px;
+  float: left;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 .transfer-container {
@@ -186,6 +168,17 @@ input:focus {
   text-align: left;
   display: block;
   width: 20%;
+  box-shadow: 0 0 10px black;
+}
+
+.preview-page {
+  table {
+    width: 100%;
+    padding: 10px 20px 10px 10px;
+    td {
+      font-weight: lighter;
+    }
+  }
 }
 
 .recent-transactions {
@@ -205,11 +198,57 @@ input:focus {
   overflow: hidden;
   overflow-y: scroll;
   margin-bottom: 20px;
+  box-shadow: 0 0 10px black;
+
+  table {
+    padding-bottom: 15px;
+    width: 100%;
+    padding: 10px 20px 10px 10px;
+  }
+
+  tr {
+    display: table;
+    margin-bottom: 10px;
+    border: 2px solid gray;
+    border-left: 5px solid #0c8397;
+    width: 100%;
+    height: 50px;
+
+    td:first-child {
+      text-align: left;
+      width: 15%;
+    }
+
+    td:nth-child(2) {
+      width: 30%;
+      text-align: left;
+
+      p {
+        margin: 0;
+        font-size: 12px;
+      }
+    }
+
+    td:last-child {
+      text-align: right;
+    }
+  }
+}
+
+h4 {
+  text-align: center;
+}
+
+h5 {
+  text-align: center;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 form {
   margin-right: 10px;
   margin-left: 10px;
+  height: 250px;
 }
 
 .form-header {
