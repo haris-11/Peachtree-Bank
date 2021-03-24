@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PeachtreeBankService } from './peachtree-bank.service';
 
@@ -20,8 +20,7 @@ export class PeachtreeBank implements OnInit {
   userForm: FormGroup;
   transactionData: any;
   unfilteredData: any;
-  credit = '+';
-  debit = '-';
+
   constructor(private peachtreeBankService: PeachtreeBankService) { }
 
   ngOnInit() {
