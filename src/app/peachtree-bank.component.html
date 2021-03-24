@@ -5,6 +5,7 @@
 <div class="page-container">
   <div class="transfer-container md-col-2">
     <div class="container-header">
+      <img src="../../assets/icons/arrows.png" style="display: none;" alt="">
       Make a Transfer
     </div>
     <form *ngIf="!previewPage" [formGroup]="userForm">
@@ -40,6 +41,7 @@
   </div>
   <div *ngIf="transactionData" class="recent-transactions md-col-6">
     <div class="container-header">
+      <img src="../../assets/icons/briefcase.png" style="display: none;" alt="">
       Recent Transactions
     </div>
     <div class="top-row">
