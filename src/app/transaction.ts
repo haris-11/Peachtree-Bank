@@ -14,5 +14,6 @@ export interface TransactionModel {
     merchant: {
         name: string;
         accountNumber?: string;
-    }
+    };
+    imageURL?: string;
 };

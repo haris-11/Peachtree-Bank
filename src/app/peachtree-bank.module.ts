@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import { PeachtreeBank } from './peachtree-bank.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DatePipe, DecimalPipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { JsonReaderService } from './json-reader.service';
+import { PeachtreeBankService } from './peachtree-bank.service';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    PeachtreeBank
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [DecimalPipe, DatePipe, JsonReaderService],
-  bootstrap: [AppComponent]
+  providers: [PeachtreeBankService],
+  bootstrap: [PeachtreeBank]
 })
 export class AppModule { }

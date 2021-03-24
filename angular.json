@@ -26,6 +26,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/assets/icons",
               "src/assets/fonts/font-file.css"
             ],
             "styles": [

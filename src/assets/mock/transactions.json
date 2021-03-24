@@ -15,7 +15,8 @@
       "merchant": {
         "name": "Backbase",
         "accountNumber": "SI64397745065188826"
-      }
+      },
+      "imageUrl":"./assets/icons/backbase.png"
     }, {
       "categoryCode": "#12a580",
       "dates": {
@@ -32,7 +33,8 @@
       "merchant": {
         "name": "The Tea Lounge",
         "accountNumber": "SI64397745065188826"
-      }
+      },
+      "imageUrl":"./assets/icons/the-tea-lounge.png"
     }, {
       "categoryCode": "#d51271",
       "dates": {
@@ -49,7 +51,8 @@
       "merchant": {
         "name": "Texaco",
         "accountNumber": "SI64397745065188826"
-      }
+      },
+      "imageUrl":"./assets/icons/texaco.png"
     }, {
       "categoryCode": "#12a580",
       "dates": {
@@ -66,7 +69,8 @@
       "merchant": {
         "name": "The Tea Lounge",
         "accountNumber": "SI64397745065188826"
-      }
+      },
+      "imageUrl":"./assets/icons/the-tea-lounge.png"
     }, {
       "categoryCode": "#c12020",
       "dates": {
@@ -83,7 +87,8 @@
       "merchant": {
         "name": "Amazon Online Store",
         "accountNumber": "SI64397745065188826"
-      }
+      },
+      "imageUrl":"./assets/icons/amazon-online-store.png"
     }, {
       "categoryCode": "#c89616",
       "dates": {
@@ -100,7 +105,8 @@
       "merchant": {
         "name": "7-Eleven",
         "accountNumber": "SI64397745065188826"
-      }
+      },
+      "imageUrl":"./assets/icons/7-eleven.png"
     }, {
       "categoryCode": "#e25a2c",
       "dates": {
@@ -116,7 +122,8 @@
       "merchant": {
         "name": "H&M Online Store",
         "accountNumber": "SI64397745065188826"
-      }
+      },
+      "imageUrl":"./assets/icons/h&m-online-store.png"
     }, {
       "categoryCode": "#1180aa",
       "dates": {
@@ -133,7 +140,8 @@
       "merchant": {
         "name": "Jerry Hildreth",
         "accountNumber": "SI64397745065188826"
-      }
+      },
+      "imageUrl":"./assets/icons/jerry-hildreth.png"
     }, {
       "categoryCode": "#1180aa",
       "dates": {
@@ -150,7 +158,8 @@
       "merchant": {
         "name": "Lawrence Pearson",
         "accountNumber": "SI64397745065188826"
-      }
+      },
+      "imageUrl":"./assets/icons/lawrence-pearson.png"
     }, {
       "categoryCode": "#12a580",
       "dates": {
@@ -167,7 +176,8 @@
       "merchant": {
         "name": "Whole Foods",
         "accountNumber": "SI64397745065188826"
-      }
+      },
+      "imageUrl":"./assets/icons/whole-foods.png"
     }, {
       "categoryCode": "#fbbb1b",
       "dates": {
@@ -184,7 +194,8 @@
       "merchant": {
         "name": "Southern Electric Company",
         "accountNumber": "SI64397745065188826"
-      }
+      },
+      "imageUrl":"./assets/icons/southern-electric-company.png"
     }
   ]
 }

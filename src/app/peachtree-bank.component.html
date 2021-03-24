@@ -1,5 +1,5 @@
 <div class="page-header">
-  <img src="../../assets/logo.jpg">
+  <img src="../../assets/logo.jpg" alt="Peachtree Bank">
   <hr>
 </div>
 <div class="page-container">
@@ -9,13 +9,13 @@
     </div>
     <form *ngIf="!previewPage" [formGroup]="userForm">
       FROM ACCOUNT <input formControlName="fromAccount" placeholder="">
-      TO ACCOUNT <input formControlName="toAccount" placeholder="Please enter an account">
-      AMOUNT <input formControlName="dollarAmount" placeholder="$ 0.00">
-      <span *ngIf="userForm.controls.dollarAmount?.errors" style="color: red;">
-        {{errorMessage}}
+      TO ACCOUNT <input formControlName="toAccount" placeholder="Please enter an account" maxlength="30">
+      AMOUNT <input formControlName="dollarAmount" placeholder="$ 0.00" #amountInputField
+        (keyUp)="amountInputFieldValidation()" maxlength="30">
+      <span *ngIf="userForm.controls.dollarAmount?.errors?.invalidAmount" style="color: red;">
+        Amount exceeds $500 overdraft limit.
       </span>
-      <button class="submit-button"
-        [ngStyle]="{'margin-top': userForm.controls.dollarAmount?.errors ? '10px' : '20px'}"
+      <button class="submit-button" [ngStyle]="{'margin-top': userForm.controls.dollarAmount?.errors ? '10px' : '20px'}"
         type="submit" (click)="onSubmitForm()">Submit</button>
     </form>
     <div *ngIf="previewPage" class="preview-page">
@@ -30,14 +30,9 @@
           <td>{{recipientAccount}}</td>
         </tr>
       </table>
-      <!-- <h5>
-        You are transferring ${{dollarAmount}} from <br>{{checkingAccountName}} to <br>{{recipientAccount}}.
-        <br>
-        <br>
-        Please click Transfer to proceed or Cancel to return.
-      </h5> -->
       <h4>
-        Please click Transfer to proceed or Cancel to return.
+        Please click Transfer to proceed
+        <br>or Cancel to return.
       </h4>
       <button class="cancel-button" type="reset" (click)="onCancel()">Cancel</button>
       <button class="transfer-button" type="submit" (click)="onTransfer()">Transfer</button>
@@ -61,19 +56,29 @@
       </div>
     </div>
     <table>
-      <tr *ngFor="let item of transactionData">
-        <td>
-          {{item.dates.valueDate | date: 'yyyy-MM-dd'}}
-        </td>
-        <td>
-          {{ item.merchant.name }} <br>
-          <p> {{ item.transaction.type}}
-          </p>
-        </td>
-        <td>
-          {{ item.transaction.amountCurrency.amount }}
-        </td>
-      </tr>
+      <ng-container *ngFor="let item of transactionData">
+        <tr [style.border-left]="'5px solid' + item.categoryCode">
+          <td>
+            {{item.dates.valueDate | date: 'MM/dd/yy'}}
+          </td>
+          <td style="width: 10%;">
+            <img class="img-responsive" src="{{item.imageUrl}}" alt="">
+          </td>
+          <td>
+            {{ item.merchant.name }} <br>
+            <p> {{ item.transaction.type}}
+            </p>
+          </td>
+          <td *ngIf="item.transaction.creditDebitIndicator !== 'CRDT'; else showCreditTransaction">
+            -{{ item.transaction.amountCurrency.amount | currency:'USD'}}
+          </td>
+          <ng-template #showCreditTransaction>
+            <td>
+              +{{ item.transaction.amountCurrency.amount  | currency:'USD'}}
+            </td>
+          </ng-template>
+        </tr>
+      </ng-container>
     </table>
   </div>
 </div>

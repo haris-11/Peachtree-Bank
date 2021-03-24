@@ -1,46 +1,42 @@
-import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { JsonReaderService } from './json-reader.service';
-import { TransactionModel } from './transaction';
+import { PeachtreeBankService } from './peachtree-bank.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  templateUrl: './peachtree-bank.component.html',
+  styleUrls: ['./peachtree-bank.component.scss']
 })
 
-export class AppComponent implements OnInit {
+export class PeachtreeBank implements OnInit {
+  @ViewChild('searchField') searchField: ElementRef;
+  @ViewChild('amountInputField') amountInputField: ElementRef;
   checkingBalance = 5824.76;
   title = 'Backbase-Interview';
   previewPage = false;
   checkingAccountName = 'Free Checking(4692)';
-  dollarAmount;
-  recipientAccount;
-  userForm;
+  dollarAmount: number;
+  recipientAccount: string;
+  userForm: FormGroup;
   transactionData: any;
-  unfilteredData;
-  errorMessage;
-  @ViewChild('searchField') searchField: ElementRef;
-  constructor(private jsonReader: JsonReaderService,
-    private decimalPipe: DecimalPipe,
-    private datePipe: DatePipe) { }
+  unfilteredData: any;
+  credit = '+';
+  debit = '-';
+  constructor(private peachtreeBankService: PeachtreeBankService) { }
+
   ngOnInit() {
-    this.jsonReader.getJSON().subscribe(data =>
-      this.formatDate(data.data)
+    this.peachtreeBankService.getJSON().subscribe(data =>
+      this.setTransactionData(data.data)
     );
     this.setFormGroup();
-    this.findImage();
   }
-  formatDate(transactionData: any) {
+
+  async setTransactionData(transactionData: any) {
     this.transactionData = transactionData;
-    this.transactionData?.forEach(item => {
-      this.datePipe.transform(item.dates.valueDate);
-    })
-    this.sortTransactions('date');
+    this.sortTransactions('date')
     this.unfilteredData = this.transactionData;
   }
+
   setFormGroup() {
     this.userForm = new FormGroup({
       fromAccount: new FormControl({ value: this.checkingAccountName + ' - $' + this.checkingBalance, disabled: true }, [Validators.required]),
@@ -48,6 +44,7 @@ export class AppComponent implements OnInit {
       dollarAmount: new FormControl('', Validators.required)
     });
   }
+
   sortTransactions(sortBy: string) {
     if (this.transactionData) {
       if (sortBy === 'date') {
@@ -61,34 +58,32 @@ export class AppComponent implements OnInit {
       }
     }
   }
+
   onSubmitForm() {
     this.dollarAmount = Number(this.userForm.value.dollarAmount);
-    if (!this.dollarAmount) {
-      // this.errorMessage = 'Please enter a value.';
+    if (!this.dollarAmount || isNaN(this.dollarAmount)) {
       this.userForm.controls.dollarAmount.setErrors({ required: true });
       this.userForm.controls.dollarAmount.markAsTouched();
-      //       this.userForm.controls.toAccount.setErrors({ required: true });
-      // this.userForm.controls.toAccount.markAsTouched();
     }
     if (!this.userForm.value.toAccount) {
       this.userForm.controls.toAccount.setErrors({ required: true });
       this.userForm.controls.toAccount.markAsTouched();
     }
-    else if ((this.checkingBalance - this.dollarAmount) < -500) {
-      this.errorMessage = 'Amount exceeds $500 overdraft limit.';
+    if ((this.checkingBalance - this.dollarAmount) < -500) {
       this.userForm.controls.dollarAmount.setErrors({ invalidAmount: true });
-    } else {
+    } else if (this.dollarAmount && this.userForm.value.toAccount) {
       this.recipientAccount = this.userForm.value.toAccount;
       this.previewPage = true;
     }
   }
+
   onCancel() {
     this.setFormGroup();
     this.previewPage = false;
   }
+
   onTransfer() {
-    this.checkingBalance -= this.dollarAmount;
-    this.checkingBalance = Number(this.decimalPipe.transform(this.checkingBalance, '1.2-2'));
+    this.checkingBalance = Number((this.checkingBalance -= this.dollarAmount).toFixed(2));
     this.transactionData.unshift({
       dates: {
         valueDate: new Date().toString()
@@ -100,13 +95,15 @@ export class AppComponent implements OnInit {
       },
       merchant: {
         name: this.recipientAccount
-      }
+      },
+      categoryCode: "#ff2136"
     });
-    this.unfilteredData = this.transactionData;
     this.setFormGroup();
+    this.unfilteredData = this.transactionData;
     this.dollarAmount = 0;
     this.previewPage = false;
   }
+
   onSearch(event) {
     let value = event?.target?.value;
     if (!value) {
@@ -114,12 +111,9 @@ export class AppComponent implements OnInit {
       this.transactionData = this.unfilteredData;
     } else {
       this.transactionData = Object.assign([], this.unfilteredData).filter(
-        item => item.merchant.name.toLowerCase().indexOf(value.toLowerCase()) > -1
+        item => item.merchant.name.toLowerCase().indexOf(value.toLowerCase()) > -1 ||
+          item.transaction.type.toLowerCase().indexOf(value.toLowerCase()) > -1
       )
     }
-  }
-  findImage() {
-    let a = this.jsonReader.getImages();
-    let b = a;
   }
 }

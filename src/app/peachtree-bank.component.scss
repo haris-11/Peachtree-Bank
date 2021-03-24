@@ -46,13 +46,22 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  // background-attachment: fixed;
+}
+
+.img-responsive {
+  height: 60%;
+  width: 60%;
+  vertical-align: middle;
 }
 
 .input-field {
   width: 50%;
   float: left;
   height: 70%;
+
+  input {
+    width: 97%;
+  }
 }
 
 .top-row {
@@ -77,6 +86,7 @@
   width: 50%;
   height: 100%;
   float: right;
+  padding-top: 10px;
 
   button {
     border-radius: 0;
@@ -94,11 +104,6 @@
   button:nth-child(2) {
     width: 30%;
   }
-}
-
-app-header {
-  top: 10vh;
-  /* height of the fixed header and the padding */
 }
 
 .container-header {
@@ -175,6 +180,7 @@ input:focus {
   table {
     width: 100%;
     padding: 10px 20px 10px 10px;
+
     td {
       font-weight: lighter;
     }
@@ -190,7 +196,7 @@ input:focus {
   background-color: white;
   color: black;
   font-weight: bold;
-  height: 60%;
+  height: 80%;
   text-align: left;
   white-space: pre-wrap;
   width: 60%;
@@ -201,25 +207,24 @@ input:focus {
   box-shadow: 0 0 10px black;
 
   table {
-    padding-bottom: 15px;
     width: 100%;
-    padding: 10px 20px 10px 10px;
+    padding: 0px 20px 10px 10px;
   }
 
   tr {
     display: table;
     margin-bottom: 10px;
     border: 2px solid gray;
-    border-left: 5px solid #0c8397;
     width: 100%;
-    height: 50px;
+    min-height: 65px;
 
     td:first-child {
       text-align: left;
       width: 15%;
     }
 
-    td:nth-child(2) {
+    td:nth-child(2),
+    td:nth-child(3) {
       width: 30%;
       text-align: left;
 
@@ -279,16 +284,14 @@ form {
     overflow: auto;
   }
 
-  .transfer-container {
-    margin-left: 10px;
-    margin-right: 10px;
-    width: auto;
-  }
-
+  .transfer-container,
   .recent-transactions {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 30px 10px 0 10px;
     width: auto;
+
+    td:first-child {
+      width: 25% !important;
+    }
   }
 
   .search-input {
@@ -305,6 +308,7 @@ form {
 
   .sort-buttons {
     width: 100%;
+    margin-bottom: 10px;
 
     button {
       width: auto;
